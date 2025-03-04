@@ -1,10 +1,6 @@
 # %%
 import streamlit as st
 import pandas as pd
-from langchain_groq import ChatGroq
-from groq import Groq
-
-client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # %%
 
