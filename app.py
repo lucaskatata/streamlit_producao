@@ -1,8 +1,15 @@
 # %%
 import streamlit as st
 import pandas as pd
+from langchain_groq import ChatGroq
+from groq import Groq
+
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+
+# %%
 
 st.set_page_config(layout='wide', page_title='Produção 2024', page_icon='📃')
+
 st.title('Controle da Produção 2024')
 
 @st.cache_data
@@ -18,12 +25,24 @@ df = load_data()
 st.session_state['df'] = df
 
 meses = df['Mês'].unique()
-mes = st.selectbox('Mês', meses, index=None, placeholder='Selecione o mês')
+mes = st.sidebar.selectbox('Mês', meses, index=None, placeholder='Selecione o mês')
 df_filtrado_mes = df[df['Mês'] == mes]
 
-col1, col2, col3, col4 = st.columns(4)
-total = df_filtrado_mes['Total'].sum()
-total_formatado = f'R$ {total:,.2f}'
-col1.markdown(f'Total: {total_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
+total_mes = df_filtrado_mes['Total'].sum()
+total_mes_formatado = f'R$ {total_mes:,.2f}'
+st.sidebar.markdown(f'Total: {total_mes_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
 
-df_filtrado_mes
+total_interno = df_filtrado_mes['Producao Interna'].sum()
+total_interno_formatado = f'R$ {total_interno:,.2f}'
+st.sidebar.markdown(f'Total Produção Interna: {total_interno_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
+
+total_mo = df_filtrado_mes['Producao M.O.'].sum()
+total_mo_formatado = f'R$ {total_mo:,.2f}'
+st.sidebar.markdown(f'Total Produção Mão de Obra: {total_mo_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
+
+
+selected = st.checkbox('Ver tabela')
+if selected:
+    df_filtrado_mes
+# %%
+# df
