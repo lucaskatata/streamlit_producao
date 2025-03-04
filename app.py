@@ -24,21 +24,20 @@ meses = df['Mês'].unique()
 mes = st.sidebar.selectbox('Mês', meses, index=None, placeholder='Selecione o mês')
 df_filtrado_mes = df[df['Mês'] == mes]
 
+col1, col2, col3 = st.columns(3)
+
 total_mes = df_filtrado_mes['Total'].sum()
 total_mes_formatado = f'R$ {total_mes:,.2f}'
-st.sidebar.markdown(f'Total: {total_mes_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
+col1.sidebar.markdown(f'Total: {total_mes_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
 
 total_interno = df_filtrado_mes['Producao Interna'].sum()
 total_interno_formatado = f'R$ {total_interno:,.2f}'
-st.sidebar.markdown(f'Total Produção Interna: {total_interno_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
+col2.sidebar.markdown(f'Total Produção Interna: {total_interno_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
 
 total_mo = df_filtrado_mes['Producao M.O.'].sum()
 total_mo_formatado = f'R$ {total_mo:,.2f}'
-st.sidebar.markdown(f'Total Produção Mão de Obra: {total_mo_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
-
+col3.sidebar.markdown(f'Total Produção Mão de Obra: {total_mo_formatado.replace('.', '-').replace(',','.').replace('-', ',')}')
 
 selected = st.checkbox('Ver tabela')
 if selected:
     df_filtrado_mes
-# %%
-# df
