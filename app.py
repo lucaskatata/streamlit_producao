@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(layout='wide')
+st.set_page_config(layout='wide', page_title='Eddi 2024', page_icon='📃')
 st.title('Controle da Produção 2024')
 
 # %%
